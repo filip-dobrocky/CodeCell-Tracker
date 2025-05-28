@@ -1,0 +1,5 @@
+#N canvas 2006 274 450 214 12;
+#X obj 45 114 ds/register_map \$2 /osc/\$1/detect/v;
+#X obj 44 89 ds/register_map \$2 /osc/\$1/detect/port;
+#X obj 45 65 ds/register_map \$2 /osc/\$1/detect/on;
+#X text 14 13 osc_detect_ds <ID> <domain>;

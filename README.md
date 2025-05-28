@@ -11,7 +11,8 @@ Motion and proximity data (from the BNO085 9-axis motion fusion sensor and the V
 - [x] proximity sensing to be used as an additional control (usable range of ~15 cm)  
 - [ ] process accelerometer data to sense motion gestures  
 - [ ] explore further usable sensor data  
-- [ ] fine tune OSC communication (so it can be used with e.g. [IEM plugins SceneRotator](https://plugins.iem.at/docs/osc/#scenerotator))  
+- [ ] make OSC messages integrable for headtracking (with e.g. [IEM plugins SceneRotator](https://plugins.iem.at/docs/osc/#scenerotator))  
+    - [ ] modify Pd patch to resend `/ypr` messages to specified port
 - [ ] implement sleep / wake function  
 - [ ] make 3D-printed enclosure
 

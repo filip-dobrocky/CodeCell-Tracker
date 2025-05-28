@@ -1,0 +1,24 @@
+#N canvas 1372 415 450 452 12;
+#X obj 43 70 bng 15 250 50 0 empty empty empty 17 7 0 10 -262144 -1
+-1;
+#X obj 46 190 bng 15 250 50 0 empty empty empty 17 7 0 10 -262144 -1
+-1;
+#X text 44 157 optional restore old: read Config;
+#X text 39 13 --- Store in non volatile memory on chip ---;
+#X msg 55 310 symbol reset;
+#X text 53 288 for reset uC \, rescan networks;
+#X text 41 140 --- Read Config from flash ---;
+#X text 39 42 --- Save Config to flash ---;
+#X text 52 267 --- reset device and read from flash ---;
+#X obj 43 91 osc_net/send_msg \$1 osc_net/save s;
+#X obj 46 211 osc_net/send_msg \$1 osc_net/read s;
+#X obj 54 332 osc_net/send_msg \$1 reset s;
+#X obj 54 357 s /osc/\$1/send;
+#X obj 46 234 s /osc/\$1/send;
+#X obj 45 114 s /osc/\$1/send;
+#X connect 0 0 9 0;
+#X connect 1 0 10 0;
+#X connect 4 0 11 0;
+#X connect 9 0 14 0;
+#X connect 10 0 13 0;
+#X connect 11 0 12 0;

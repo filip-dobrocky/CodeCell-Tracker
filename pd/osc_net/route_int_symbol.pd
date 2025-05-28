@@ -1,0 +1,21 @@
+#N canvas 1711 421 450 300 12;
+#X obj 166 118 makefilename %d;
+#X obj 166 64 loadbang;
+#X obj 166 89 i \$1;
+#X obj 238 63 inlet;
+#X obj 65 71 inlet;
+#X obj 66 209 outlet;
+#X text 66 8 route_int_symbol <number>;
+#X text 64 37 routes a number as a symbol \, mostly from osc_parse
+;
+#X obj 144 210 outlet;
+#X msg 218 90 bang;
+#X obj 66 168 route s;
+#X connect 0 0 10 1;
+#X connect 1 0 2 0;
+#X connect 2 0 0 0;
+#X connect 3 0 2 0;
+#X connect 4 0 10 0;
+#X connect 9 0 2 0;
+#X connect 10 0 5 0;
+#X connect 10 1 8 0;

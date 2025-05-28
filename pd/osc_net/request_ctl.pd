@@ -1,0 +1,27 @@
+#N canvas 1441 432 560 300 10;
+#X obj 101 101 cnv 15 198 48 empty empty request_\$1 2 8 0 12 -233017
+-66577 0;
+#X obj 103 134 nbx 2 14 0 99 0 0 /osc/\$1/nr /osc/\$1/nr device 0 -8
+0 10 -262144 -1 -1 0 256;
+#X obj 147 134 nbx 7 14 -1e+37 1e+37 0 0 /osc/\$1/duration /osc/\$1/duration
+duration 0 -8 0 10 -262144 -1 -1 1000 256;
+#X obj 236 134 nbx 5 14 -1e+37 1e+37 0 0 /osc/\$1/deltatime /osc/\$1/deltatime
+deltatime 0 -8 0 10 -262144 -1 -1 0 256;
+#X obj 196 104 bng 15 250 50 0 empty empty empty 17 7 0 10 -262144
+-1 -1;
+#X obj 280 103 tgl 15 0 /osc/\$1/v /osc/\$1/v v 5 7 0 10 -257985 -1
+-1 1 1;
+#X obj 108 33 metro 1000;
+#X obj 265 103 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 1
+1;
+#X obj 211 104 nbx 5 14 -1e+37 1e+37 0 0 empty empty empty 0 -8 0 10
+-262144 -1 -1 1000 256;
+#X obj 268 25 loadbang;
+#X msg 268 48 1000;
+#X connect 4 0 1 0;
+#X connect 6 0 4 0;
+#X connect 7 0 6 0;
+#X connect 8 0 6 1;
+#X connect 9 0 10 0;
+#X connect 10 0 8 0;
+#X coords 0 -1 1 1 200 50 1 100 100;

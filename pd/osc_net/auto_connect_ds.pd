@@ -1,0 +1,4 @@
+#N canvas 2006 274 450 214 12;
+#X text 14 13 osc_auto_connect_ds <ID> <domain> [port];
+#X obj 45 65 ds/register_map \$2 /osc/\$1/send/auto/on;
+#X obj 45 89 ds/register_map \$2 /osc/\$1/send/auto/once;

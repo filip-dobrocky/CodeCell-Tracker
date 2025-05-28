@@ -1,0 +1,8 @@
+#N canvas 2164 640 488 310 12;
+#X text 14 13 osc_send_ds <ID> <domain>;
+#X obj 45 65 ds/register_map \$2 /osc/\$1/send/on;
+#X obj 45 90 ds/register_map \$2 /osc/\$1/send/ip;
+#X obj 45 114 ds/register_map \$2 /osc/\$1/send/portnr;
+#X obj 44 186 ds/register_map \$2 /osc/\$1/send/v;
+#X obj 44 164 ds/register_map \$2 /osc/\$1/send/return/v;
+#X obj 44 139 ds/register_map \$2 /osc/\$1/send/autoconnect;

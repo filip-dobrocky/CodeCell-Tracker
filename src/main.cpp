@@ -17,25 +17,28 @@ bool osc_ready = false;
 CodeCell myCodeCell;
 
 // === OSC message definitions ===
-OSC_send_msg send_msg_yaw("/yaw");
-OSC_send_msg send_msg_pitch("/pitch");
-OSC_send_msg send_msg_roll("/roll");
+OSC_send_msg send_msg_ypr("/ypr");
 OSC_send_msg send_msg_proximity("/proximity");
-
+OSC_send_msg send_msg_mag("/magnetometer");
+OSC_send_msg send_msg_battery("/battery");
 
 // === Global sensor values ===
 float roll = 0.0;
 float pitch = 0.0;
 float yaw = 0.0;
+float x = 0.0;  // Magnetic field on X-axis
+float y = 0.0;  // Magnetic field on Y-axis
+float z = 0.0;  // Magnetic field on Z-axis
 uint16_t proximity = 0;
 
 // === Function prototypes ===
 void resetup();
 void resetup_attempt();
 void send_messages();
+void read_battery();
 
 void setup() {
-  Serial.begin(115200); // Set Serial baud rate to 115200. Ensure Tools/USB_CDC_On_Boot is enabled if using Serial.
+  Serial.begin(115200); // Ensure Tools/USB_CDC_On_Boot is enabled if using Serial.
 
   {
     ESP_LOGD(TAG, "Set Config Defaults\n");
@@ -51,7 +54,7 @@ void setup() {
   osc_net_init(&networker_config);
 
   ESP_LOGD(TAG, "CodeCell Init\n");
-  myCodeCell.Init(MOTION_ROTATION | LIGHT);
+  myCodeCell.Init(MOTION_ROTATION | LIGHT | MOTION_MAGNETOMETER);
 }
 
 void loop() {
@@ -66,24 +69,29 @@ void loop() {
 
   if (myCodeCell.Run(10)) { 
     myCodeCell.Motion_RotationRead(roll, pitch, yaw);
-    uint16_t proximity = myCodeCell.Light_ProximityRead();
+    proximity = myCodeCell.Light_ProximityRead();
+    myCodeCell.Motion_MagnetometerRead(x, y, z);
+
     ESP_LOGI(TAG, "Roll: %.2f°, Pitch: %.2f°, Yaw: %.2f°\n", roll, pitch, yaw);
+    ESP_LOGI(TAG, "Magnet X: %.2f, Y: %.2f, Z: %.2f\n", x, y, z);
     ESP_LOGI(TAG, "Proximity: %d\n", proximity);
   }
 
-  // send_messages();
+  send_messages();
+  read_battery();
 }
 
 void resetup()
 {
-  Serial.println("Resetup attempt");
+  ESP_LOGI(TAG, "Resetup attempt\n");
   if (!osc_net_osc_resetup(osc_net_udp)) // setup udep and OSC messages for networking
     return;                              // try again later if network is responding
 
   // add custom parsed messages: receive_messages and get_messages
-  send_msg_yaw.init(osc_net_config->osc_baseaddress);
-  send_msg_pitch.init(osc_net_config->osc_baseaddress);
-  send_msg_roll.init(osc_net_config->osc_baseaddress);
+  send_msg_ypr.init(osc_net_config->osc_baseaddress);
+  send_msg_proximity.init(osc_net_config->osc_baseaddress);
+  send_msg_mag.init(osc_net_config->osc_baseaddress);
+
   osc_ready = true;
 }
 
@@ -102,19 +110,36 @@ void resetup_attempt()
 void send_messages()
 {
   static unsigned long last_send = 0ul;
-  unsigned int send_interval = 10; // 10ms
+  unsigned int send_interval = 30u; // 10ms
   if (millis() - last_send < send_interval)
     return;
   last_send = millis();
 
-  send_msg_yaw.m.add(yaw);
-  send_msg_pitch.m.add(pitch);
-  send_msg_roll.m.add(roll);
+  send_msg_ypr.m.add(yaw);
+  send_msg_ypr.m.add(pitch);
+  send_msg_ypr.m.add(roll);
   send_msg_proximity.m.add(proximity);
+  send_msg_mag.m.add(x);
+  send_msg_mag.m.add(y);
+  send_msg_mag.m.add(z);
 
-  send_msg_yaw.send(osc_net_udp, osc_net_udp.remoteIP(), networker_config.osc_port);
-  send_msg_pitch.send(osc_net_udp, osc_net_udp.remoteIP(), networker_config.osc_port);
-  send_msg_roll.send(osc_net_udp, osc_net_udp.remoteIP(), networker_config.osc_port);
+  send_msg_ypr.send(osc_net_udp, osc_net_udp.remoteIP(), networker_config.osc_port);
   send_msg_proximity.send(osc_net_udp, osc_net_udp.remoteIP(), networker_config.osc_port);
+  send_msg_mag.send(osc_net_udp, osc_net_udp.remoteIP(), networker_config.osc_port);
+}
+
+void read_battery()
+{
+  static unsigned long last_battery_read = 0ul;
+  unsigned long battery_read_interval = 30000ul; // 60 seconds
+  if (millis() - last_battery_read < battery_read_interval)
+    return;
+  last_battery_read = millis();
+
+  uint8_t battery_level = myCodeCell.BatteryLevelRead();
+  ESP_LOGI(TAG, "Battery status: %d\n", battery_level);
+  
+  send_msg_battery.m.add(battery_level);
+  send_msg_battery.send(osc_net_udp, osc_net_udp.remoteIP(), networker_config.osc_port);
 }
 

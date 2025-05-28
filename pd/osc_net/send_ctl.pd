@@ -1,0 +1,29 @@
+#N canvas 794 364 372 162 10;
+#X obj 11 11 cnv 15 198 98 empty empty osc_send_\$1 3 8 0 10 -262130
+-66577 0;
+#X symbolatom 18 89 15 0 0 2 IP_to_send - /osc/#1/send/ip;
+#X obj 128 92 nbx 5 14 -1e+37 1e+37 0 0 /osc/\$1/send/portnr /osc/\$1/send/portnr
+portnr 0 -8 0 10 -262144 -1 -1 55555 256;
+#X obj 14 32 tgl 30 0 /osc/\$1/send/on /osc/\$1/send/on ON 3 15 0 16
+-4034 -1 -1 1 1;
+#X msg 220 55 set \$1;
+#X obj 115 56 tgl 15 0 empty /osc/\$1/send/connected connected 17 7
+0 10 -262130 -1 -1 0 1;
+#X obj 52 32 tgl 15 0 /osc/\$1/send/v /osc/\$1/send/v V_send 4 8 0
+10 -257985 -1 -1 1 1;
+#X obj 219 12 r /osc/\$1/send/ip;
+#X obj 52 47 tgl 15 0 /osc/\$1/send/return/v /osc/\$1/send/return/v
+V_return 4 8 0 10 -257985 -1 -1 1 1;
+#X obj 193 94 bng 15 250 50 0 empty empty empty 17 7 0 10 -262130 -1
+-1;
+#X obj 116 15 bng 15 250 50 0 empty empty connect 17 7 0 10 -262144
+-1 -1;
+#X obj 219 33 route symbol;
+#X obj 116 36 bng 15 250 50 0 /osc/\$1/send/disconnect /osc/\$1/send/disconnect
+disconnect 17 7 0 10 -262144 -1 -1;
+#X connect 4 0 1 0;
+#X connect 7 0 11 0;
+#X connect 10 0 1 0;
+#X connect 11 0 4 0;
+#X connect 11 1 9 0;
+#X coords 0 -1 1 1 200 100 2 10 10;

@@ -1,0 +1,12 @@
+#N canvas 1572 382 303 116 10;
+#X obj 11 11 cnv 15 198 48 empty empty auto_connect_\$1 3 8 0 10 -261682
+-66577 0;
+#X obj 121 23 tgl 15 0 empty /osc/\$1/send/connected connected 17 7
+0 10 -262130 -1 -1 0 1;
+#X obj 121 38 tgl 15 0 /osc/\$1/send/autoconnect /osc/\$1/send/autoconnect
+autoconnect 17 7 0 8 -204786 -1 -1 0 1;
+#X obj 13 42 tgl 15 0 /osc/\$1/send/auto/once /osc/\$1/send/auto/once
+auto_once 17 7 0 10 -262144 -1 -1 0 1;
+#X obj 13 27 tgl 15 0 /osc/\$1/send/auto/on /osc/\$1/send/auto/on auto_on
+17 7 0 10 -262144 -1 -1 0 1;
+#X coords 0 -1 1 1 200 50 2 10 10;

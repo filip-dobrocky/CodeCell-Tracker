@@ -1,0 +1,10 @@
+#N canvas 1856 419 450 165 12;
+#X obj 25 79 list split 1;
+#X obj 24 108 list trim;
+#X obj 26 48 inlet;
+#X obj 24 135 outlet;
+#X text 24 21 stupid helper for problems with symbols;
+#X text 34 0 osc_net/route_anything;
+#X connect 0 1 1 0;
+#X connect 1 0 3 0;
+#X connect 2 0 0 0;

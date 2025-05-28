@@ -1,0 +1,17 @@
+#N canvas 109 662 501 191 12;
+#X declare -path . -path iemlib -lib iemlib;
+#N canvas 916 105 450 97 declares 0;
+#X obj 27 34 declare -path . -path iemlib -lib iemlib;
+#X restore 25 43 pd declares;
+#X text 25 -3 Simple OSC_networking configuration patch for one controller as an example;
+#X obj 22 84 hradio 15 1 0 9 /osc/1/id /osc/1/id ID 0 -8 0 10 #fcfcfc #000000 #000000 0;
+#X obj 186 86 nbx 3 14 -1e+37 1e+37 0 0 /osc/1/id /osc/1/id id 0 -8 0 10 #fcfcfc #000000 #000000 0 256;
+#X text 148 83 8;
+#X text 58 83 2;
+#X text 88 83 4;
+#X text 117 83 6;
+#X text 160 85 ...;
+#X text 233 81 1.) select device to interface;
+#X obj 16 145 osc_net/configuration 1 1 1;
+#X text 15 116 Use Network Configurator from OSC_networking library;
+#X obj 201 43 tgl 20 0 /osc/net/configure/1/GUI /osc/net/configure/1/GUI netconfig-GUI 0 10 0 11 #c6feff #000000 #000000 0 1;
